@@ -63,7 +63,7 @@ Swagger UI будет доступен по адресу:
 http://127.0.0.1:8000/docs
 ```
 ![Swagger](screenshots/03-swagger-ui.png)
-7. Docker
+## 5. Docker
 
 Сборка докер образа:
 ```bash
@@ -78,5 +78,90 @@ docker run -d --name audit-service -p 8001:8000 vandyshev/protected-workstation-
 ```bash
 curl http://localhost:8001/health
 ```
-![Health](06-docker-curl-health.png)
+![Health](screenshots/06-docker-curl-health.png)
+Публикация на DockerHub
+```bash
+docker login
+docker tag vandyshev/protected-workstation-audit-service:v1 vandyshev/protected-workstation-audit-service:v1
+docker push vandyshev/protected-workstation-audit-service:v1
+```
+![DockerHub2](screenshots/07-docker-hub.png)
+## 6. Terraform + Yandex Cloud
+1)Создали файл terraform.tfvars
 
+2)Инициализировали и запустили
+```bash
+terraform init
+terraform plan
+terraform apply -auto-approve
+```
+![1](screenshots/13-terraform-init-plan.png)
+
+После выполнения Terraform покажет public_ip и service_url
+
+![](screenshots/08-terraform-apply-state-output.png)
+
+Проверить можно через:
+```bash
+curl http://IP_ИЗ_ВЫВОДА:8000/health
+```
+![2](screenshots/14-terraform-apply-success.png)
+
+Консоль Yandex
+
+![3](screenshots/09-YandexCloud.png)
+
+## 7. Kubernetes (Minikube)
+1) Запускаем Minikube
+
+![Start Minikube](screenshots/15-minikube-start.png)
+
+2)Применяем манифесты:
+
+```bash
+kubectl apply -f k8s/namespace.yaml
+kubectl apply -f k8s/deployment.yaml
+kubectl apply -f k8s/service.yaml
+```
+![aaply](screenshots/16-kubectl-apply.png)
+
+3) Проверяем:
+```bash
+kubectl get all -n vandyshev-audit
+minikube service audit-service -n vandyshev-audit --url
+```
+![get all](screenshots/17-kubectl-get-all.png)
+
+## 8. Проверка сервиса через YandexVM
+
+1)Подключаемся к ВМ через SSH. Пример команды: 
+
+```bash
+ssh <имя_пользователя>@<публичный_IP-адрес_ВМ> -i <путь_к_приватному_ключу>
+```
+2) Для проверки работы аросматриваем контейнеры через:
+```bash
+sudo docker ps
+```
+А также логи (выводы) контейнера:
+
+```bash
+sudo docker logs
+```
+![docker ps](screenshots/11-VM-Docker-Check.png)
+
+## 8. Команды для очистки окружения после выполнения всей работы
+
+1) Docker:
+```bash
+docker stop audit-service && docker rm audit-service
+```
+2) Terraform
+```bash
+cd terraform-yandex && terraform destroy -auto-approve
+```
+3) Minikube
+```bash
+minikube delete
+```
+## 9. Безопасность 
