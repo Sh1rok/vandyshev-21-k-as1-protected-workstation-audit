@@ -1,9 +1,20 @@
+# Terraform
+.terraform/
+*.tfstate
+*.tfstate.*
+terraform.tfvars
+terraform.tfvars.json
+override.tf
+override.tf.json
+*.tfvars
+
+# Секретные ключи
+key.json
+*.pem
+*.key
+*.crt
+
+# Python
 venv/
 __pycache__/
 *.pyc
-.env
-terraform.tfvars
-*.tfstate
-*.tfstate.*
-.terraform/
-.DS_Store
