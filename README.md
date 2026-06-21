@@ -21,7 +21,7 @@
 Демонстрация полного DevOps-цикла: FastAPI → Docker → Yandex Cloud (Terraform) → Kubernetes.
 
 ## 2. Структура репозитория
-screenshots/02-project-tree.png
+02-project-tree.png
 
 ## 3–13. Все разделы
 (Скопируй структуру из оригинального README Гофмана и замени все названия, пути и скриншоты на свои.)
