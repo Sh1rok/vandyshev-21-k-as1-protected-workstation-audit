@@ -78,4 +78,5 @@ docker run -d --name audit-service -p 8001:8000 vandyshev/protected-workstation-
 ```bash
 curl http://localhost:8001/health
 ```
-![Health]()
+![Health](06-docker-curl-health.png)
+
