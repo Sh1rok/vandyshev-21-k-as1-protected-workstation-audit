@@ -62,4 +62,20 @@ Swagger UI будет доступен по адресу:
 ```bash
 http://127.0.0.1:8000/docs
 ```
-![Swagger](sreenshots/03-swagger-ui.png)
+![Swagger](screenshots/03-swagger-ui.png)
+7. Docker
+
+Сборка докер образа:
+```bash
+docker build -t protected-workstation-audit-service .
+```
+![Build](screenshots/04-docker-build.png)
+Запуск и проверка контейнера:
+```bash
+docker run -d --name audit-service -p 8001:8000 vandyshev/protected-workstation-audit-service:v1
+```
+![Run](screenshots/05-docker-container.png)
+```bash
+curl http://localhost:8001/health
+```
+![Health]()
